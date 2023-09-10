@@ -118,6 +118,9 @@ sqlc_package = rule(
             default = False,
             doc = "If true, slices returned by :many queries will be empty instead of nil",
         ),
+        "gen": attr.string_dict(
+            doc = "A dictionary of gen options to pass to sqlc",
+        ),
     },
     doc = """
 sqlc generates **fully type-safe idiomatic Go code** from SQL.
