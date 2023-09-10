@@ -96,7 +96,9 @@ def sqlc_configure(ctx, params, queries, schemas, out, config_path_depth):
                 # TODO(Windows) Figure out path handling for windows
                 queries = ["{}/{}".format(back_to_root, p) for p in queries],
                 schema = ["{}/{}".format(back_to_root, p) for p in schemas],
-                gen = params.gen,
+                gen = struct(
+                    go = params.gen,
+                ),
             )],
         ).to_json()
 
