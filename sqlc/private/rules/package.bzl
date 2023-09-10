@@ -105,7 +105,7 @@ sqlc_package = rule(
         "emit_db_tags": attr.bool(
             default = False,
             doc = "If true, add db tags to generated structs",
-        )
+        ),
         "emit_prepared_queries": attr.bool(
             default = False,
             doc = "If true, include support for prepared queries",
