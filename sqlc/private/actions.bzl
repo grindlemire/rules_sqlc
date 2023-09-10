@@ -65,20 +65,26 @@ def sqlc_configure(ctx, params, queries, schemas, out, config_path_depth):
 
     if versions.is_at_least("1.5.0", toolchain_version):
         config = struct(
-            version = "1",
-            overrides = overrides,
-            packages = [struct(
-                name = params.package or ctx.label.name,
+            version = "2",
+            sql = [struct(
                 engine = params.engine,
-                emit_empty_slices = params.emit_empty_slices,
-                emit_exact_table_names = params.emit_exact_table_names,
-                emit_interface = params.emit_interface,
-                emit_json_tags = params.emit_json_tags,
-                emit_prepared_queries = params.emit_prepared_queries,
-                path = ".",
                 # TODO(Windows) Figure out path handling for windows
                 queries = ["{}/{}".format(back_to_root, p) for p in queries],
                 schema = ["{}/{}".format(back_to_root, p) for p in schemas],
+                gen = struct(
+                    go = struct(
+                        package = params.package or ctx.label.name,
+                        out = ".",
+                        sql_package = params.sql_package,
+                        emit_db_tags = params.emit_db_tags,
+                        emit_empty_slices = params.emit_empty_slices,
+                        emit_exact_table_names = params.emit_exact_table_names,
+                        emit_interface = params.emit_interface,
+                        emit_json_tags = params.emit_json_tags,
+                        emit_prepared_queries = params.emit_prepared_queries,
+                        overrides = overrides,
+                    ),
+                ),
             )],
         ).to_json()
     else:
@@ -96,9 +102,6 @@ def sqlc_configure(ctx, params, queries, schemas, out, config_path_depth):
                 # TODO(Windows) Figure out path handling for windows
                 queries = ["{}/{}".format(back_to_root, p) for p in queries],
                 schema = ["{}/{}".format(back_to_root, p) for p in schemas],
-                gen = struct(
-                    go = params.gen,
-                ),
             )],
         ).to_json()
 

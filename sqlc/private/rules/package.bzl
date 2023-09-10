@@ -102,6 +102,10 @@ sqlc_package = rule(
             default = False,
             doc = "If true, add JSON tags to generated structs",
         ),
+        "emit_db_tags": attr.bool(
+            default = False,
+            doc = "If true, add db tags to generated structs",
+        )
         "emit_prepared_queries": attr.bool(
             default = False,
             doc = "If true, include support for prepared queries",
@@ -118,8 +122,12 @@ sqlc_package = rule(
             default = False,
             doc = "If true, slices returned by :many queries will be empty instead of nil",
         ),
-        "gen": attr.string_dict(
-            doc = "A dictionary of gen options to pass to sqlc",
+        "sql_package": attr.string(
+            default = "sql",
+            doc = "The go sql driver used in the generated code",
+        ),
+        "rename": attr.string_dict(
+            doc = "A dictionary of struct field renamings in the generated code",
         ),
     },
     doc = """
